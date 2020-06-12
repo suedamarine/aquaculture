@@ -40,7 +40,7 @@ pi* 16^2
 
 # a + 2a + 3a = 804mm2
 
-depth <- c(100, 150, 200, 250, 300, 350)
+depth <- seq(50, 300, 50)
 relative_pressure <- depth/ 100
 total_area <- 804/sum(relative_pressure)
 total_area

@@ -34,15 +34,15 @@ flow_500
 
 # diameter of holes in spray bars 300l tanks
 # depths at 50, 100, 150 mm
-# use 32mm pipe for area
 
-pi* 16^2
+# use 25mm pipe for area
 
-# a + 2a + 3a = 804mm2
+cross <- pi* 12.5^2
+
 
 depth <- seq(50, 300, 50)
 relative_pressure <- depth/ 100
-total_area <- 804/sum(relative_pressure)
+total_area <- cross/sum(relative_pressure)
 total_area
 hole_area <- relative_pressure*total_area
 hole_diameter <- 2*sqrt(hole_area / pi)
@@ -67,3 +67,16 @@ hole_diameter_500 <- 2*sqrt(hole_area_500 / pi)
 spray_bar_df_500 <- data.frame(depth_500, relative_pressure_500, hole_area_500, hole_diameter_500)
 spray_bar_df_500
 write.csv(spray_bar_df_500, "spray_bar_df_500.csv")
+
+hole_size_function <- function(w, x, y, z){ 
+  # w = pipe diameter, x = first depth, y = second depth, z = spacing
+  hole_depth <- seq(x, y, by = z)
+  rel_pressure <- hole_depth / x
+  total_h_area <- (pi * (0.5*w)^2)/ sum(rel_pressure)
+  each_hole_area <- rel_pressure*total_h_area
+  hole_diameters <- 2 * sqrt(each_hole_area/pi)
+  hole_size_df <- data.frame(hole_depth, rel_pressure, each_hole_area, hole_diameters)
+  print(hole_size_df)
+}
+
+
